@@ -2,7 +2,7 @@ FROM ubuntu:rolling
 RUN apt-get update && \ 
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get upgrade -y && \
-  apt-get install -y gcc python3 python3-pip python3-venv npm git openssh-server && \
+  apt-get install -y gcc python3 python3-pip python3-venv npm git tzdata && \
   rm -rf /var/lib/apt/lists/* && \
   rm /bin/sh && ln -s /bin/bash /bin/sh && \
   ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
