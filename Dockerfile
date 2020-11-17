@@ -3,13 +3,12 @@ RUN apt-get update && \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get upgrade -y && \
   apt-get install -y \
-  build-essential cmake libfftw3-dev libpcap-dev \
+  build-essential cmake libfftw3-dev libpcap-dev gdb \
   python3 python3-dev python3-pip python3-venv \
   npm git tzdata \
   && \
   rm -rf /var/lib/apt/lists/*
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh && \
-  rm /usr/bin/sh && ln -s /usr/bin/bash /usr/bin/sh && \
   ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
   dpkg-reconfigure --frontend noninteractive tzdata
 RUN mkdir -p /venv && \
@@ -43,5 +42,10 @@ RUN mkdir -p /venv && \
     xeus-python
 RUN /venv/bin/jupyter labextension install jupyterlab-plotly@4.12.0 @jupyter-widgets/jupyterlab-manager plotlywidget@4.12.0 --no-build && \
   /venv/bin/jupyter labextension install @jupyterlab/debugger --no-build && \
-  /venv/bin/jupyter lab build
+  /venv/bin/jupyter lab build && \
+  /venv/bin/jupyter lab clean && \
+  /venv/bin/jlpm cache clean && \
+  npm cache clean --force && \
+  rm -rf $HOME/.node-gyp && \
+  rm -rf $HOME/.local
   
