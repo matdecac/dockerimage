@@ -20,6 +20,7 @@ RUN mkdir -p /venv && \
     dash_daq \
     dash-bootstrap-components \
     pandas \
+    xlrd \
     numpy \
     scipy \
     matplotlib \
