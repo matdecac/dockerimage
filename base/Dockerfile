@@ -3,7 +3,7 @@ RUN apt-get update && \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get upgrade -y && \
   apt-get install -y \
-  python3 python3-dev python3-pip python3-venv \
+  python3 gcc python3-dev python3-pip python3-venv \
   npm git tzdata openssh-server \
   && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /run/sshd
@@ -48,7 +48,6 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     dash-bootstrap-components \
     gunicorn \
     SQLAlchemy \
-    alembic \
-    tabulate # to check why it is necessary
+    alembic
 
   
