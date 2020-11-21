@@ -5,9 +5,10 @@ RUN apt-get update && \
   apt-get install -y \
   build-essential cmake libfftw3-dev libpcap-dev gdb \
   python3 python3-dev python3-pip python3-venv \
-  npm git tzdata \
+  npm git tzdata openssh-server \
   && \
   rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /run/sshd
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh && \
   ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
   dpkg-reconfigure --frontend noninteractive tzdata
@@ -40,7 +41,11 @@ RUN mkdir -p /venv && \
     gunicorn \
     jupyterlab \
     ipywidgets>=7.5 \
-    xeus-python
+    pylint \
+    xeus-python \
+    requests_html \
+    tensorflow \
+    tabulate # to check why it is necessary
 RUN /venv/bin/jupyter labextension install jupyterlab-plotly@4.12.0 @jupyter-widgets/jupyterlab-manager plotlywidget@4.12.0 --no-build && \
   /venv/bin/jupyter labextension install @jupyterlab/debugger --no-build && \
   /venv/bin/jupyter lab build && \
