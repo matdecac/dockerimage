@@ -1,4 +1,4 @@
-FROM matdecac/images:base
+FROM matdecac/images:jupyterbase
 RUN /venv/bin/pip3 install --no-cache-dir \
     telepot \
     yfinance \

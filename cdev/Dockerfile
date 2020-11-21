@@ -1,4 +1,4 @@
-FROM matdecac/images:base
+FROM matdecac/images:jupyterbase
 RUN apt-get update && \ 
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get upgrade -y && \
