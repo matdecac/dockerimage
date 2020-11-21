@@ -3,13 +3,16 @@ RUN apt-get update && \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get upgrade -y && \
   apt-get install -y \
-  python3 gcc python3-dev python3-pip python3-venv \
-  npm git tzdata openssh-server \
+  python3 python3-dev python3-pip python3-venv \
+  gcc npm git tzdata locales openssh-server \
   && rm -rf /var/lib/apt/lists/*
-RUN mkdir -p /run/sshd
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh && \
-  ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
   dpkg-reconfigure --frontend noninteractive tzdata
+RUN export LC_ALL="fr_FR.UTF-8" && \
+  export LC_CTYPE="fr_FR.UTF-8" && \
+  dpkg-reconfigure --frontend noninteractive locales
+RUN mkdir -p /run/sshd
 RUN mkdir -p /venv && \
   python3 -m venv /venv/ && \
   /venv/bin/pip3 install --upgrade pip --no-cache-dir
