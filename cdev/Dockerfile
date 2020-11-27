@@ -3,7 +3,6 @@ RUN apt-get update \
   && export DEBIAN_FRONTEND=noninteractive \
   && apt-get upgrade -y \
   && apt-get install -y \
-  software-properties-common \
   build-essential cmake gdb \
   libfftw3-dev libpcap-dev \
   && add-apt-repository -y ppa:ettusresearch/uhd \
