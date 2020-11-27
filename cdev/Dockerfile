@@ -8,7 +8,7 @@ RUN apt-get update \
   && add-apt-repository -y ppa:ettusresearch/uhd \
   && apt-get update \
   && apt-get install -y \
-  libuhd-dev libuhd003 uhd-host \
+  libuhd-dev uhd-host libuhd3.15.0 \
   && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /venv \
   && python3 -m venv /venv/ \
