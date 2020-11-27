@@ -3,7 +3,9 @@ RUN apt-get update && \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get upgrade -y && \
   apt-get install -y \
-  build-essential cmake gdb libfftw3-dev libpcap-dev \
+  build-essential cmake gdb \
+  libfftw3-dev libpcap-dev \
+  libuhd-dev libuhd003 uhd-host \
   && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /venv && \
   python3 -m venv /venv/ && \
