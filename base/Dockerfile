@@ -1,4 +1,4 @@
-FROM ubuntu:rolling
+FROM ubuntu:focal
 RUN apt-get update \ 
   && export DEBIAN_FRONTEND=noninteractive \
   && apt-get upgrade -y \
