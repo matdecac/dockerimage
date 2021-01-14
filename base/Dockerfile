@@ -6,7 +6,7 @@ RUN apt-get update \
   software-properties-common \
   tzdata locales \
   python3 python3-dev python3-pip python3-venv \
-  gcc npm git openssh-server \
+  gcc npm git openssh-server curl \
   && rm -rf /var/lib/apt/lists/*
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
@@ -18,7 +18,7 @@ RUN export LC_ALL="fr_FR.UTF-8" \
   && locale-gen \
   && dpkg-reconfigure --frontend noninteractive locales
 RUN mkdir -p /run/sshd
-RUN curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash \
+RUN curl -sL https://deb.nodesource.com/setup_15.x | bash \
   && apt-get update -y \
   && apt-get install -y \
   nodejs npm \
