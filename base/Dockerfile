@@ -13,6 +13,9 @@ RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
   && dpkg-reconfigure --frontend noninteractive tzdata
 RUN export LC_ALL="fr_FR.UTF-8" \
   && export LC_CTYPE="fr_FR.UTF-8" \
+  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
+  && echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen \
+  && locale-gen \
   && dpkg-reconfigure --frontend noninteractive locales
 RUN mkdir -p /run/sshd
 RUN mkdir -p /venv \
