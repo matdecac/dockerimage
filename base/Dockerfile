@@ -6,7 +6,7 @@ RUN apt-get update \
   software-properties-common \
   tzdata locales \
   python3 python3-dev python3-pip python3-venv \
-  gcc npm git openssh-server curl \
+  gcc g++ make git openssh-server curl \
   && rm -rf /var/lib/apt/lists/*
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
