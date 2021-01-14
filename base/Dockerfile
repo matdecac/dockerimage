@@ -27,6 +27,7 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     ipywidgets>=7.5 \
     ipython \
     xeus-python
+RUN npm install -g npm@latest
 RUN /venv/bin/jupyter labextension install jupyterlab-plotly@4.12.0 @jupyter-widgets/jupyterlab-manager plotlywidget@4.12.0 --no-build \
   && /venv/bin/jupyter labextension install @jupyterlab/debugger --no-build \
   && /venv/bin/jupyter lab build \
