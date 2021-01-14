@@ -23,7 +23,6 @@ RUN curl -sL https://deb.nodesource.com/setup_15.x | bash \
   && apt-get install -y \
   nodejs \
   && rm -rf /var/lib/apt/lists/*
-RUN npm install -g npm@latest
 RUN mkdir -p /venv \
   && python3 -m venv /venv/ \
   && /venv/bin/pip3 install --upgrade pip --no-cache-dir
