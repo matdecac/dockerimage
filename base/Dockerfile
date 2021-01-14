@@ -31,8 +31,9 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     jupyterlab \
     ipywidgets>=7.5 \
     ipython \
-    xeus-python
-RUN /venv/bin/jupyter labextension install jupyterlab-plotly@4.12.0 @jupyter-widgets/jupyterlab-manager plotlywidget@4.12.0 --no-build \
+    xeus-python \
+    ptvsd
+RUN /venv/bin/jupyter labextension install jupyterlab-plotly@4.14.3 @jupyter-widgets/jupyterlab-manager plotlywidget@4.14.3 --no-build \
   && /venv/bin/jupyter labextension install @jupyterlab/debugger --no-build \
   && /venv/bin/jupyter lab build \
   && /venv/bin/jupyter lab clean \
