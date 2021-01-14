@@ -21,7 +21,7 @@ RUN mkdir -p /run/sshd
 RUN curl -sL https://deb.nodesource.com/setup_15.x | bash \
   && apt-get update -y \
   && apt-get install -y \
-  nodejs npm \
+  nodejs \
   && rm -rf /var/lib/apt/lists/*
 RUN npm install -g npm@latest
 RUN mkdir -p /venv \
