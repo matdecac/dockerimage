@@ -4,7 +4,7 @@ RUN apt-get update \
   && apt-get upgrade -y \
   && apt-get install -y \
   build-essential cmake gdb \
-  graphviz doxygen texlive \
+  graphviz doxygen texlive-latex-extra texlive-lang-french ghostscript \
   libfftw3-dev libpcap-dev \
   && add-apt-repository -y ppa:ettusresearch/uhd \
   && apt-get update \
