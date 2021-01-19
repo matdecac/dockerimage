@@ -1,38 +1,44 @@
 FROM ubuntu:focal
-RUN apt-get update \ 
-  && export DEBIAN_FRONTEND=noninteractive \
+# initial packages install
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
   && apt-get upgrade -y \
   && apt-get install -y \
   software-properties-common \
   tzdata locales \
   python3 python3-dev python3-pip python3-venv \
-  gcc g++ make git openssh-server curl \
+  gcc make git openssh-server curl \
   && rm -rf /var/lib/apt/lists/*
+# replace SH with BASH
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+# Locales gen
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
-  && dpkg-reconfigure --frontend noninteractive tzdata
-RUN export LC_ALL="fr_FR.UTF-8" \
+  && dpkg-reconfigure --frontend noninteractive tzdata \
+  && export LC_ALL="fr_FR.UTF-8" \
   && export LC_CTYPE="fr_FR.UTF-8" \
   && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
   && echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen \
   && dpkg-reconfigure --frontend noninteractive locales
+# SSH run folder
 RUN mkdir -p /run/sshd
-RUN curl -sL https://deb.nodesource.com/setup_15.x | bash \
-  && apt-get update -y \
-  && apt-get install -y \
-  nodejs \
-  && rm -rf /var/lib/apt/lists/*
+# create python venv
 RUN mkdir -p /venv \
-  && python3 -m venv /venv/ \
-  && /venv/bin/pip3 install --upgrade pip --no-cache-dir
-RUN /venv/bin/pip3 install --no-cache-dir \
+  && python3 -m venv /venv/
+# Install jupyterlab and its plotly extension
+RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir \
     jupyterlab \
     ipywidgets>=7.5 \
     ipython \
     xeus-python \
-    ptvsd
-RUN /venv/bin/jupyter labextension install jupyterlab-plotly@4.14.3 @jupyter-widgets/jupyterlab-manager plotlywidget@4.14.3 --no-build \
+    ptvsd \
+    plotly \
+  && curl -sL https://deb.nodesource.com/setup_15.x | bash \
+  && export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
+  && apt-get install -y nodejs \
+  && rm -rf /var/lib/apt/lists/* \
+  && /venv/bin/jupyter labextension install jupyterlab-plotly@4.14.3 @jupyter-widgets/jupyterlab-manager plotlywidget@4.14.3 --no-build \
   && /venv/bin/jupyter labextension install @jupyterlab/debugger --no-build \
   && /venv/bin/jupyter lab build \
   && /venv/bin/jupyter lab clean \
@@ -40,15 +46,14 @@ RUN /venv/bin/jupyter labextension install jupyterlab-plotly@4.14.3 @jupyter-wid
   && npm cache clean --force \
   && rm -rf $HOME/.node-gyp \
   && rm -rf $HOME/.local
+# install all other required python packages
 RUN /venv/bin/pip3 install --no-cache-dir \
-    plotly \
     pandas \
     xlrd \
     numpy \
     scipy \
     matplotlib \
     scikit-learn \
-    tensorflow \
     openpyxl \
     beautifulsoup4 \
     Pillow \
@@ -63,5 +68,7 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     gunicorn \
     SQLAlchemy \
     alembic
-
-  
+    h5py
+# install additional packages for ML
+RUN /venv/bin/pip3 install --no-cache-dir \
+    tensorflow
