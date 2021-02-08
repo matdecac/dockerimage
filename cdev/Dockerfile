@@ -78,7 +78,7 @@ RUN /venv/bin/pip3 install --no-cache-dir \
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y \
-  build-essential cmake gdb \
+  build-essential cmake gdb valgrind \
   graphviz doxygen \
   libfftw3-dev libpcap-dev \
   && rm -rf /var/lib/apt/lists/*
