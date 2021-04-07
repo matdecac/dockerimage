@@ -30,6 +30,7 @@ RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir \
     jupyterlab \
     ipywidgets>=7.5 \
     ipython \
+    ipykernel \
     xeus-python \
     ptvsd \
     plotly \
