@@ -71,7 +71,8 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     alembic \
     dpkt \
     gpsd-py3 \
-    h5py
+    h5py \
+    gpxpy
 # install additional packages for ML
 RUN /venv/bin/pip3 install --no-cache-dir \
     tensorflow
