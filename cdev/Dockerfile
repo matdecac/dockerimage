@@ -25,8 +25,9 @@ RUN mkdir -p /run/sshd
 # create python venv
 RUN mkdir -p /venv \
   && python3 -m venv /venv/
+RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install jupyterlab and its plotly extension
-RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir \
+RUN /venv/bin/pip3 install --no-cache-dir\
     jupyterlab \
     ipywidgets>=7.5 \
     ipython \
