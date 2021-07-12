@@ -40,7 +40,6 @@ RUN /venv/bin/pip3 install --no-cache-dir\
   && apt-get update \
   && apt-get install -y nodejs \
   && rm -rf /var/lib/apt/lists/* \
-  && /venv/bin/jupyter labextension install jupyterlab-plotly@4.14.3 @jupyter-widgets/jupyterlab-manager plotlywidget@4.14.3 --no-build \
   && /venv/bin/jupyter labextension install @jupyterlab/debugger --no-build \
   && /venv/bin/jupyter lab build \
   && /venv/bin/jupyter lab clean \
@@ -61,6 +60,7 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     Pillow \
     graphviz \
     lxml \
+    tabulate \
     python-dateutil \
     pylint \
     requests_html \
