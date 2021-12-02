@@ -73,6 +73,7 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     dpkt \
     gpsd-py3 \
     h5py \
+    pyserial \
     gpxpy
 # install additional packages for ML
 RUN /venv/bin/pip3 install --no-cache-dir \
