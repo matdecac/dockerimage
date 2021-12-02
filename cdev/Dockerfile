@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:21.10
 # initial packages install
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
