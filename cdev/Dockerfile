@@ -1,4 +1,4 @@
-FROM ubuntu:21.10
+FROM ubuntu:21.04
 # initial packages install
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
