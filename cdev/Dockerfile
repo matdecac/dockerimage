@@ -28,25 +28,13 @@ RUN mkdir -p /venv \
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install jupyterlab and its plotly extension
 RUN /venv/bin/pip3 install --no-cache-dir\
-    jupyterlab \
-    ipywidgets>=7.5 \
+    jupyterlab>=3 \
+    ipywidgets>=7.6 \
+    jupyter-dash \
     ipython \
     ipykernel \
-    xeus-python \
     ptvsd \
-    plotly \
-  && curl -sL https://deb.nodesource.com/setup_15.x | bash \
-  && export DEBIAN_FRONTEND=noninteractive \
-  && apt-get update \
-  && apt-get install -y nodejs \
-  && rm -rf /var/lib/apt/lists/* \
-  && /venv/bin/jupyter labextension install @jupyterlab/debugger --no-build \
-  && /venv/bin/jupyter lab build \
-  && /venv/bin/jupyter lab clean \
-  && /venv/bin/jlpm cache clean \
-  && npm cache clean --force \
-  && rm -rf $HOME/.node-gyp \
-  && rm -rf $HOME/.local
+    plotly
 # install all other required python packages
 RUN /venv/bin/pip3 install --no-cache-dir \
     pandas \
