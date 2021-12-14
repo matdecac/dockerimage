@@ -81,3 +81,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get install -y \
   libboost-all-dev libuhd-dev uhd-host libuhd3.15.0 \
   && rm -rf /var/lib/apt/lists/*
+# install all other required python packages
+RUN /venv/bin/pip3 install --no-cache-dir \
+    ipympl
