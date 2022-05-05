@@ -98,3 +98,13 @@ ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
 RUN cd uhd/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. && make -j12
 RUN cd uhd/uhd/host/build && make install && ldconfig
 ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/site-packages:$PYTHONPATH"
+
+RUN mkdir aff3ct && cd aff3ct && git clone --recursive https://github.com/aff3ct/py_aff3ct.git
+RUN cd aff3ct && git submodule update --init --recursive
+RUN cd aff3ct/lib/aff3ct && mkdir build && cd build && cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-funroll-loops -march=native -fvisibility=hidden -fvisibility-inlines-hidden -faligned-new" -DAFF3CT_COMPILE_EXE="OFF" -DAFF3CT_COMPILE_STATIC_LIB="ON" -DAFF3CT_COMPILE_SHARED_LIB="ON" ..
+RUN cd aff3ct/lib/aff3ct/build && make -j12
+RUN cd aff3ct && mkdir -p cmake/Modules && cp lib/aff3ct/build/lib/cmake/aff3ct-*/* cmake/Modules
+RUN cd aff3ct && mkdir build && cd build && ../configure.py --verbose && cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Wall -funroll-loops -march=native -fvisibility=hidden -fvisibility-inlines-hidden -faligned-new"
+RUN cd aff3ct/build && make -j12
+
+
