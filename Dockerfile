@@ -103,7 +103,7 @@ RUN git clone --recursive https://github.com/aff3ct/py_aff3ct.git aff3ct
 RUN cd aff3ct/lib/aff3ct && mkdir build && cd build && cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-funroll-loops -march=native -fvisibility=hidden -fvisibility-inlines-hidden -faligned-new" -DAFF3CT_COMPILE_EXE="OFF" -DAFF3CT_COMPILE_STATIC_LIB="ON" -DAFF3CT_COMPILE_SHARED_LIB="ON" ..
 RUN cd aff3ct/lib/aff3ct/build && make -j12
 RUN cd aff3ct && mkdir -p cmake/Modules && cp lib/aff3ct/build/lib/cmake/aff3ct-*/* cmake/Modules
-RUN cd aff3ct/doc && mkdir build && cd source && doxygen Doxyfile
+RUN cd aff3ct/lib/aff3ct/doc && mkdir build && cd source && doxygen Doxyfile
 RUN /venv/bin/pip3 install --no-cache-dir \
     xmltodict
 RUN cd aff3ct && mkdir build && cd build && ../configure.py --verbose && cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Wall -funroll-loops -march=native -fvisibility=hidden -fvisibility-inlines-hidden -faligned-new"
