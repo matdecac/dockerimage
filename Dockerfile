@@ -1,4 +1,4 @@
-FROM ubuntu:21.04
+FROM ubuntu:22.04
 # initial packages install
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -41,6 +41,7 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     xlrd \
     numpy \
     scipy \
+    mako \
     matplotlib \
     scikit-learn \
     openpyxl \
@@ -51,6 +52,7 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     tabulate \
     python-dateutil \
     pylint \
+    requests \
     requests_html \
     dash \
     dash_daq \
@@ -62,10 +64,15 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     gpsd-py3 \
     h5py \
     pyserial \
-    gpxpy
+    ahrs \
+    setuptools \
+    gpxpy \
+    ipympl \
+    reedsolo \
+    scikit-commpy
 # install additional packages for ML
-RUN /venv/bin/pip3 install --no-cache-dir \
-    tensorflow
+# RUN /venv/bin/pip3 install --no-cache-dir \
+#     tensorflow
 # install c++ tools
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -76,11 +83,18 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && rm -rf /var/lib/apt/lists/*
 # install additionnal linux packages for USRP support
 RUN export DEBIAN_FRONTEND=noninteractive \
-  && add-apt-repository -y ppa:ettusresearch/uhd \
   && apt-get update \
   && apt-get install -y \
-  libboost-all-dev libuhd-dev uhd-host libuhd3.15.0 \
+  autoconf automake ccache cpufrequtils ethtool \
+  g++ inetutils-tools libboost-all-dev libncurses5 libncurses5-dev libusb-1.0-0 libusb-1.0-0-dev \
+  libusb-dev python3-dev \
+  ruamel.yaml \
   && rm -rf /var/lib/apt/lists/*
-# install all other required python packages
-RUN /venv/bin/pip3 install --no-cache-dir \
-    ipympl
+RUN mkdir uhd && cd uhd && git clone https://github.com/EttusResearch/uhd.git
+#RUN echo "export PATH=\"/venv/bin:$PATH\"" >> /etc/bash.bashrc
+#RUN echo "export PYTHONPATH=\"/venv/lib/python3.10/site-packages:${PYTHONPATH}\"" >> /etc/bash.bashrc
+ENV PATH="/venv/bin:$PATH"
+ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
+RUN cd uhd/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. && make -j12
+RUN cd uhd/uhd/host/build && make install && ldconfig
+ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/site-packages:$PYTHONPATH"
