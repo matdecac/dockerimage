@@ -110,3 +110,6 @@ RUN cd aff3ct && mkdir build && cd build && ../configure.py --verbose && cmake .
 RUN cd aff3ct/build && make -j12
 
 
+RUN mkdir -p /usr/local/lib/python3.10/sites-packages
+RUN mv /usr/local/local/lib/python3.10/dist-packages/uhd /usr/local/lib/python3.10/sites-packages/uhd
+RUN mv /usr/local/local/lib/python3.10/dist-packages/usrp_mpm /usr/local/lib/python3.10/sites-packages/usrp_mpm
