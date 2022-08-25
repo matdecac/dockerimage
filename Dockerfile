@@ -69,7 +69,8 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     gpxpy \
     ipympl \
     reedsolo \
-    scikit-commpy
+    scikit-commpy \
+    xmltodict
 # install additional packages for ML
 # RUN /venv/bin/pip3 install --no-cache-dir \
 #     tensorflow
@@ -104,8 +105,6 @@ RUN cd aff3ct/lib/aff3ct && mkdir build && cd build && cmake -G"Unix Makefiles" 
 RUN cd aff3ct/lib/aff3ct/build && make -j12
 RUN cd aff3ct && mkdir -p cmake/Modules && cp lib/aff3ct/build/lib/cmake/aff3ct-*/* cmake/Modules
 RUN cd aff3ct/lib/aff3ct/doc && mkdir build && cd source && doxygen Doxyfile
-RUN /venv/bin/pip3 install --no-cache-dir \
-    xmltodict
 RUN cd aff3ct && mkdir build && cd build && ../configure.py --verbose && cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Wall -funroll-loops -march=native -fvisibility=hidden -fvisibility-inlines-hidden -faligned-new"
 RUN cd aff3ct/build && make -j12
 
