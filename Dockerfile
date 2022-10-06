@@ -68,9 +68,9 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     setuptools \
     gpxpy \
     ipympl \
-    reedsolo \
     scikit-commpy \
-    xmltodict
+    xmltodict \
+    kaleido
 # install additional packages for ML
 # RUN /venv/bin/pip3 install --no-cache-dir \
 #     tensorflow
