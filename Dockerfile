@@ -1,4 +1,4 @@
-FROM ubuntu:22.10
+FROM ubuntu:18.04
 # initial packages install
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -6,7 +6,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get install -y \
   software-properties-common \
   tzdata locales bash-completion \
-  python3 python3-dev python3-pip python3-venv \
   python3.7 python3.7-dev python3.7-pip python3.7-venv python3.7-distutils \
   gcc make git openssh-server curl \
   libopenmpi-dev \
