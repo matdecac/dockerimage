@@ -5,9 +5,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get upgrade -y \
   && apt-get install -y \
   software-properties-common \
-  tzdata locales \
+  tzdata locales bash-completion \
   python3 python3-dev python3-pip python3-venv \
-  gcc make git openssh-server curl iproute2 \
+  gcc make git openssh-server curl \
+  libopenmpi-dev \
   && rm -rf /var/lib/apt/lists/*
 # replace SH with BASH
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -35,52 +36,33 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     ipython \
     ipykernel \
     ptvsd \
-    plotly
-# install all other required python packages
-RUN /venv/bin/pip3 install --no-cache-dir \
+    plotly \
+    pylint \
     pandas \
     xlrd \
     numpy \
     scipy \
-    mako \
+    plotly \
+    kaleido \
     matplotlib \
     scikit-learn \
+    mako \
     openpyxl \
-    beautifulsoup4 \
     Pillow \
     graphviz \
     lxml \
     tabulate \
     python-dateutil \
-    pylint \
     requests \
     requests_html \
-    dash \
-    dash_daq \
-    dash-bootstrap-components \
-    gunicorn \
     SQLAlchemy \
     alembic \
-    dpkt \
-    gpsd-py3 \
     h5py \
     pyserial \
-    ahrs \
     setuptools \
     gpxpy \
     ipympl \
-    scikit-commpy \
     xmltodict \
-    kaleido \
-    pyproj
-# install tools
-RUN export DEBIAN_FRONTEND=noninteractive \
-  && apt-get update \
-  && apt-get install -y \
-  libopenmpi-dev \
-  && rm -rf /var/lib/apt/lists/*
-# install additional packages for ML
-RUN /venv/bin/pip3 install --no-cache-dir \
     "cloudpickle~=1.2.1" \
     "gym~=0.15.3" \
     joblib \
