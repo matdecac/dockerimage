@@ -7,6 +7,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   software-properties-common \
   tzdata locales bash-completion \
   python3 python3-dev python3-pip python3-venv \
+  python3.7 python3.7-dev python3.7-pip python3.7-venv python3.7-distutils \
   gcc make git openssh-server curl \
   libopenmpi-dev \
   && rm -rf /var/lib/apt/lists/*
@@ -25,12 +26,12 @@ RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
 RUN mkdir -p /run/sshd
 # create python venv
 RUN mkdir -p /venv \
-  && python3 -m venv /venv/
+  && python3.7 --python="/usr/bin/python3.7" -m venv /venv/
 # define env path for python
 RUN echo "PATH=/venv/bin:$PATH" > /etc/profile.d/python_venv.sh
 ENV PATH="/venv/bin:$PATH"
-ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
-ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.7/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.7/site-packages:/usr/local/lib/python3.7/site-packages:$PYTHONPATH"
 
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install jupyterlab and its plotly extension
@@ -47,7 +48,6 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     xlrd \
     numpy \
     scipy \
-    plotly \
     kaleido \
     matplotlib \
     scikit-learn \
