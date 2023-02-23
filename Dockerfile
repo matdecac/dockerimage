@@ -81,18 +81,14 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && rm -rf /var/lib/apt/lists/*
 # install additional packages for ML
 RUN /venv/bin/pip3 install --no-cache-dir \
-    cloudpickle~=1.2.1 \
-    gym~=0.15.3 \
-    ipython \
+    "cloudpickle~=1.2.1" \
+    "gym~=0.15.3" \
     joblib \
-    matplotlib \
-    numpy \
-    pandas \
     pytest \
     psutil \
-    scipy \
-    seaborn==0.8.1 \
-    sphinx==1.5.6 \
-    sphinx-autobuild==0.7.1 \
-    sphinx-rtd-theme==0.4.1 \
-    tensorflow>=1.8.0,<2.0
+    torch \
+    "seaborn==0.8.1" \
+    "sphinx==1.5.6" \
+    "sphinx-autobuild==0.7.1" \
+    "sphinx-rtd-theme==0.4.1" \
+    "tensorflow>=1.8.0,<2.0"
