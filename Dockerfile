@@ -6,7 +6,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get install -y \
   software-properties-common \
   tzdata locales bash-completion \
-  python3.7 python3.7-dev python3.7-pip python3.7-venv python3.7-distutils \
+  python3.7 python3.7-dev python3-pip python3.7-venv python3.7-distutils \
   gcc make git openssh-server curl \
   libopenmpi-dev \
   && rm -rf /var/lib/apt/lists/*
