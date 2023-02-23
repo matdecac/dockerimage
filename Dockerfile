@@ -25,7 +25,7 @@ RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
 RUN mkdir -p /run/sshd
 # create python venv
 RUN mkdir -p /venv \
-  && python3.7 --python="/usr/bin/python3.7" -m venv /venv/
+  && python3.7 -m venv /venv/
 # define env path for python
 RUN echo "PATH=/venv/bin:$PATH" > /etc/profile.d/python_venv.sh
 ENV PATH="/venv/bin:$PATH"
