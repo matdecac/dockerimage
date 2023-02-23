@@ -26,7 +26,12 @@ RUN mkdir -p /run/sshd
 # create python venv
 RUN mkdir -p /venv \
   && python3 -m venv /venv/
+# define env path for python
 RUN echo "PATH=/venv/bin:$PATH" > /etc/profile.d/python_venv.sh
+ENV PATH="/venv/bin:$PATH"
+ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/site-packages:$PYTHONPATH"
+
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install jupyterlab and its plotly extension
 RUN /venv/bin/pip3 install --no-cache-dir\
