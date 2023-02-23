@@ -5,9 +5,12 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get upgrade -y \
   && apt-get install -y \
   software-properties-common \
-  tzdata locales \
+  tzdata locales bash-completion \
   python3 python3-dev python3-pip python3-venv \
-  gcc make git openssh-server curl iproute2 tshark \
+  gcc make git openssh-server curl iproute2 \
+  build-essential cmake gdb valgrind \
+  graphviz doxygen tshark \
+  libfftw3-dev libpcap-dev \
   && rm -rf /var/lib/apt/lists/*
 # replace SH with BASH
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -26,6 +29,9 @@ RUN mkdir -p /run/sshd
 RUN mkdir -p /venv \
   && python3 -m venv /venv/
 RUN echo "PATH=/venv/bin:$PATH" > /etc/profile.d/python_venv.sh
+ENV PATH="/venv/bin:$PATH"
+ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/site-packages:$PYTHONPATH"
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install jupyterlab and its plotly extension
 RUN /venv/bin/pip3 install --no-cache-dir\
@@ -35,9 +41,7 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     ipython \
     ipykernel \
     ptvsd \
-    plotly
-# install all other required python packages
-RUN /venv/bin/pip3 install --no-cache-dir \
+    plotly \
     pandas \
     xlrd \
     numpy \
@@ -73,17 +77,7 @@ RUN /venv/bin/pip3 install --no-cache-dir \
     xmltodict \
     kaleido \
     pyproj
-# install additional packages for ML
-# RUN /venv/bin/pip3 install --no-cache-dir \
-#     tensorflow
-# install c++ tools
-RUN export DEBIAN_FRONTEND=noninteractive \
-  && apt-get update \
-  && apt-get install -y \
-  build-essential cmake gdb valgrind \
-  graphviz doxygen \
-  libfftw3-dev libpcap-dev \
-  && rm -rf /var/lib/apt/lists/*
+# ---------------------------------------------------
 # install additionnal linux packages for USRP support
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -94,8 +88,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   ruamel.yaml \
   && rm -rf /var/lib/apt/lists/*
 RUN mkdir uhd && cd uhd && git clone https://github.com/EttusResearch/uhd.git
-#RUN echo "export PATH=\"/venv/bin:$PATH\"" >> /etc/bash.bashrc
-#RUN echo "export PYTHONPATH=\"/venv/lib/python3.10/site-packages:${PYTHONPATH}\"" >> /etc/bash.bashrc
 ENV PATH="/venv/bin:$PATH"
 ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
 RUN cd uhd/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. && make -j12
@@ -105,3 +97,5 @@ ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/sit
 RUN mkdir -p /usr/local/lib/python3.10/site-packages
 RUN mv /usr/local/local/lib/python3.10/dist-packages/uhd /usr/local/lib/python3.10/site-packages/uhd
 RUN mv /usr/local/local/lib/python3.10/dist-packages/usrp_mpm /usr/local/lib/python3.10/site-packages/usrp_mpm
+# ---------------------------------------------------
+
