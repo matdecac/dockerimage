@@ -9,8 +9,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   python3 python3-dev python3-pip python3-venv \
   gcc make git openssh-server curl iproute2 \
   build-essential cmake gdb valgrind \
-  graphviz doxygen tshark \
-  libfftw3-dev libpcap-dev \
+  graphviz doxygen \
+  libfftw3-dev libpcap-dev tshark \
   && rm -rf /var/lib/apt/lists/*
 # replace SH with BASH
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -41,6 +41,7 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     ipython \
     ipykernel \
     ptvsd \
+    pylint \
     plotly \
     pandas \
     xlrd \
@@ -49,6 +50,7 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     mako \
     matplotlib \
     scikit-learn \
+    scikit-commpy \
     openpyxl \
     beautifulsoup4 \
     Pillow \
@@ -56,7 +58,6 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     lxml \
     tabulate \
     python-dateutil \
-    pylint \
     requests \
     requests_html \
     dash \
@@ -69,11 +70,9 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     gpsd-py3 \
     h5py \
     pyserial \
-    ahrs \
     setuptools \
     gpxpy \
     ipympl \
-    scikit-commpy \
     xmltodict \
     kaleido \
     pyproj
