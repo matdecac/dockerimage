@@ -32,6 +32,11 @@ ENV PATH="/venv/bin:$PATH"
 ENV PYTHONPATH="/venv/lib/python3.7/site-packages:$PYTHONPATH"
 ENV PYTHONPATH="/venv/lib/python3.7/site-packages:/usr/local/lib/python3.7/site-packages:$PYTHONPATH"
 
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
+  && apt-get install -y \
+  libosmesa6-dev libgl1-mesa-glx libglfw3 libglew-dev \
+  && rm -rf /var/lib/apt/lists/*
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install jupyterlab and its plotly extension
 RUN /venv/bin/pip3 install --no-cache-dir\
@@ -77,4 +82,5 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     "sphinx==1.5.6" \
     "sphinx-autobuild==0.7.1" \
     "sphinx-rtd-theme==0.4.1" \
-    "tensorflow>=1.8.0,<2.0"
+    "tensorflow>=1.8.0,<2.0" \
+    "mujoco-py<2.2,>=2.1"
