@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM nvidia/cuda:12.0.1-base-ubuntu18.04
 # initial packages install
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -83,4 +83,5 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     "sphinx-autobuild==0.7.1" \
     "sphinx-rtd-theme==0.4.1" \
     "tensorflow>=1.8.0,<2.0" \
+    "protobuf<=3.20" \
     "mujoco-py<2.2,>=2.1"
