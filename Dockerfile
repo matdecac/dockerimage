@@ -88,4 +88,5 @@ RUN /venv/bin/pip3 install --no-cache-dir\
 
 # Install jupyterlab and its plotly extension
 RUN /venv/bin/pip3 install --no-cache-dir\
-    mpi4py
+    mpi4py /
+    spinup
