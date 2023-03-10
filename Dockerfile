@@ -85,3 +85,7 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     "tensorflow>=1.8.0,<2.0" \
     "protobuf<=3.20" \
     "mujoco-py<2.2,>=2.1"
+
+# Install jupyterlab and its plotly extension
+RUN /venv/bin/pip3 install --no-cache-dir\
+    mpi4py
