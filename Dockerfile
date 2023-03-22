@@ -90,3 +90,5 @@ RUN /venv/bin/pip3 install --no-cache-dir\
 RUN /venv/bin/pip3 install --no-cache-dir\
     mpi4py \
     spinup
+RUN mkdir -p /pkg_cust/
+RUN cd /pkg_cust/ && git clone https://github.com/openai/spinningup.git && cd spinningup && pip install -e .
