@@ -9,6 +9,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   python3.7 python3.7-dev python3-pip python3.7-venv python3.7-distutils \
   gcc make git openssh-server curl \
   libopenmpi-dev \
+  xvfb ffmpeg \
   && rm -rf /var/lib/apt/lists/*
 # replace SH with BASH
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -72,29 +73,6 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     gpxpy \
     ipympl \
     xmltodict \
-    "cloudpickle~=1.2.1" \
-    "gym~=0.15.3" \
-    joblib \
-    pytest \
-    psutil \
-    torch \
-    "seaborn==0.8.1" \
-    "sphinx==1.5.6" \
-    "sphinx-autobuild==0.7.1" \
-    "sphinx-rtd-theme==0.4.1" \
-    "tensorflow>=1.8.0,<2.0" \
-    "protobuf<=3.20" \
     "mujoco-py<2.2,>=2.1"
 
-# Install jupyterlab and its plotly extension
-RUN /venv/bin/pip3 install --no-cache-dir\
-    mpi4py \
-    spinup
-RUN mkdir -p /pkg_cust/
-RUN cd /pkg_cust/ && git clone https://github.com/openai/spinningup.git && cd spinningup && pip install -e .
-RUN export DEBIAN_FRONTEND=noninteractive \
-  && apt-get update \
-  && apt-get upgrade -y \
-  && apt-get install -y \
-  xvfb \
-  && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /pkg_cust/ && cd /pkg_cust/ && git clone https://github.com/openai/spinningup.git && cd spinningup && pip install -e .
