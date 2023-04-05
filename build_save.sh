@@ -1,4 +1,4 @@
-image_name="base_image:1.5.0"
+image_name="matdecac/images:1.5.0"
 file_name="${image_name//\//_}"
 file_name="${file_name//\:/-}"
 file_name="${file_name}.tar.gz"
