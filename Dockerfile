@@ -33,7 +33,7 @@ ENV PATH="/venv/bin:$PATH"
 ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
 ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/site-packages:$PYTHONPATH"
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
-# Install jupyterlab and its plotly extension
+# Install pythons extensions
 RUN /venv/bin/pip3 install --no-cache-dir\
     jupyterlab>=3 \
     ipywidgets>=7.6 \
@@ -75,9 +75,13 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     ipympl \
     xmltodict \
     kaleido \
-    pyproj
+    pyproj \
+    simplekml
 # ---------------------------------------------------
-# install additionnal linux packages for USRP support
+# Custom packages install
+RUN mkdir -p custom_pkgs
+# ---------------------------------------------------
+# install UHD for USRP support
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y \
@@ -86,15 +90,21 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libusb-dev python3-dev \
   ruamel.yaml \
   && rm -rf /var/lib/apt/lists/*
-RUN mkdir uhd && cd uhd && git clone https://github.com/EttusResearch/uhd.git
+RUN cd custom_pkgs && git clone https://github.com/EttusResearch/uhd.git uhd
 ENV PATH="/venv/bin:$PATH"
 ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
-RUN cd uhd/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. && make -j12
-RUN cd uhd/uhd/host/build && make install && ldconfig
+RUN cd custom_pkgs/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. && make -j12
+RUN cd custom_pkgs/uhd/host/build && make install && ldconfig
 ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/site-packages:$PYTHONPATH"
 
 RUN mkdir -p /usr/local/lib/python3.10/site-packages
 RUN mv /usr/local/local/lib/python3.10/dist-packages/uhd /usr/local/lib/python3.10/site-packages/uhd
 RUN mv /usr/local/local/lib/python3.10/dist-packages/usrp_mpm /usr/local/lib/python3.10/site-packages/usrp_mpm
 # ---------------------------------------------------
-
+# install additionnal linux packages for RTKLIB support
+RUN cd custom_pkgs && git clone https://github.com/rtklibexplorer/RTKLIB.git rtklib
+RUN cd custom_pkgs/rtklib/app/consapp/convbin/gcc && make -j8 && make install
+RUN cd custom_pkgs/rtklib/app/consapp/rnx2rtkp/gcc && make -j8 && make install
+RUN cd custom_pkgs/rtklib/app/consapp/rtkrcv/gcc && make -j8 && make install
+RUN cd custom_pkgs/rtklib/app/consapp/str2str/gcc && make -j8 && make install
+# ---------------------------------------------------
