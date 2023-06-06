@@ -98,9 +98,6 @@ RUN cd custom_pkgs/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROO
 RUN cd custom_pkgs/uhd/host/build && make install && ldconfig
 ENV PYTHONPATH="/venv/lib/python3.11/site-packages:/usr/local/lib/python3.11/site-packages:$PYTHONPATH"
 
-RUN mkdir -p /usr/local/lib/python3.11/site-packages
-RUN mv /usr/local/local/lib/python3.11/dist-packages/uhd /usr/local/lib/python3.11/site-packages/uhd
-RUN mv /usr/local/local/lib/python3.11/dist-packages/usrp_mpm /usr/local/lib/python3.11/site-packages/usrp_mpm
 # ---------------------------------------------------
 # install additionnal linux packages for RTKLIB support
 RUN cd custom_pkgs && git clone https://github.com/rtklibexplorer/RTKLIB.git rtklib
