@@ -1,4 +1,4 @@
-FROM ubuntu:22.10
+FROM ubuntu:23.04
 # initial packages install
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -30,8 +30,8 @@ RUN mkdir -p /venv \
   && python3 -m venv /venv/
 RUN echo "PATH=/venv/bin:$PATH" > /etc/profile.d/python_venv.sh
 ENV PATH="/venv/bin:$PATH"
-ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
-ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.11/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.11/site-packages:/usr/local/lib/python3.11/site-packages:$PYTHONPATH"
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install pythons extensions
 RUN /venv/bin/pip3 install --no-cache-dir\
@@ -76,6 +76,7 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     xmltodict \
     kaleido \
     pyproj \
+    pymap3d \
     simplekml
 # ---------------------------------------------------
 # Custom packages install
@@ -92,14 +93,14 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && rm -rf /var/lib/apt/lists/*
 RUN cd custom_pkgs && git clone https://github.com/EttusResearch/uhd.git uhd
 ENV PATH="/venv/bin:$PATH"
-ENV PYTHONPATH="/venv/lib/python3.10/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.11/site-packages:$PYTHONPATH"
 RUN cd custom_pkgs/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. && make -j12
 RUN cd custom_pkgs/uhd/host/build && make install && ldconfig
-ENV PYTHONPATH="/venv/lib/python3.10/site-packages:/usr/local/lib/python3.10/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.11/site-packages:/usr/local/lib/python3.11/site-packages:$PYTHONPATH"
 
-RUN mkdir -p /usr/local/lib/python3.10/site-packages
-RUN mv /usr/local/local/lib/python3.10/dist-packages/uhd /usr/local/lib/python3.10/site-packages/uhd
-RUN mv /usr/local/local/lib/python3.10/dist-packages/usrp_mpm /usr/local/lib/python3.10/site-packages/usrp_mpm
+RUN mkdir -p /usr/local/lib/python3.11/site-packages
+RUN mv /usr/local/local/lib/python3.11/dist-packages/uhd /usr/local/lib/python3.11/site-packages/uhd
+RUN mv /usr/local/local/lib/python3.11/dist-packages/usrp_mpm /usr/local/lib/python3.11/site-packages/usrp_mpm
 # ---------------------------------------------------
 # install additionnal linux packages for RTKLIB support
 RUN cd custom_pkgs && git clone https://github.com/rtklibexplorer/RTKLIB.git rtklib
