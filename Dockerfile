@@ -8,6 +8,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   tzdata locales bash-completion \
   python3 python3-dev python3-pip python3-venv \
   gcc make git openssh-server curl iproute2 \
+  nano bash-completion \
   build-essential cmake gdb valgrind \
   graphviz doxygen \
   libfftw3-dev libpcap-dev tshark \
