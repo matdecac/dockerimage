@@ -10,6 +10,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   gcc make git openssh-server curl iproute2 \
   nano bash-completion \
   build-essential cmake gdb valgrind \
+  lcov gcovr \
   graphviz doxygen \
   libfftw3-dev libpcap-dev tshark \
   && rm -rf /var/lib/apt/lists/*
