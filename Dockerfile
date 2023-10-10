@@ -79,7 +79,8 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     kaleido \
     pyproj \
     pymap3d \
-    simplekml
+    simplekml \
+    python-docx
 # ---------------------------------------------------
 # Custom packages install
 RUN mkdir -p custom_pkgs
