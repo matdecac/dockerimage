@@ -80,7 +80,8 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     pyproj \
     pymap3d \
     simplekml \
-    python-docx
+    python-docx \
+    coverage
 # ---------------------------------------------------
 # Custom packages install
 RUN mkdir -p custom_pkgs
