@@ -1,4 +1,4 @@
-FROM ubuntu:23.04
+FROM ubuntu:23.10
 # initial packages install
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
