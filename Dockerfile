@@ -1,4 +1,4 @@
-FROM ubuntu:23.10
+FROM ubuntu:23.04
 # initial packages install
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -91,7 +91,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y \
   autoconf automake ccache cpufrequtils ethtool \
-  g++ inetutils-tools libboost-all-dev libncurses6 libncurses6-dev libusb-1.0-0 libusb-1.0-0-dev \
+  g++ inetutils-tools libboost-all-dev libncurses5 libncurses5-dev libusb-1.0-0 libusb-1.0-0-dev \
   libusb-dev python3-dev \
   ruamel.yaml \
   && rm -rf /var/lib/apt/lists/*
