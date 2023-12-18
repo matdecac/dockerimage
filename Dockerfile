@@ -10,10 +10,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   python3 python3-dev python3-pip python3-venv \
   gcc make git openssh-server curl iproute2 \
   nano bash-completion \
-  build-essential cmake gdb valgrind \
-  lcov gcovr \
-  graphviz doxygen \
-  libfftw3-dev libpcap-dev tshark \
+  efitools sbsigntool \
   && rm -rf /var/lib/apt/lists/*
 # replace SH with BASH
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -50,46 +47,20 @@ RUN /venv/bin/pip3 install --no-cache-dir\
     xlrd \
     numpy \
     scipy \
-    mako \
     matplotlib \
     scikit-learn \
-    scikit-commpy \
-    openpyxl \
-    beautifulsoup4 \
-    Pillow \
     graphviz \
     lxml \
     tabulate \
     python-dateutil \
-    requests \
-    requests_html \
-    dash \
-    dash_daq \
-    dash-bootstrap-components \
-    gunicorn \
-    SQLAlchemy \
-    alembic \
-    dpkt \
-    gpsd-py3 \
-    h5py \
-    pyserial \
     setuptools \
-    gpxpy \
-    ipympl \
-    xmltodict \
-    kaleido \
-    pyproj \
-    pymap3d \
-    simplekml \
-    python-docx \
-    coverage
 # ---------------------------------------------------
 # install additionnal linux packages for RTKLIB support
-RUN export DEBIAN_FRONTEND=noninteractive \
-  && apt-get update \
-  && apt-get upgrade -y \
-  && apt-get dist-upgrade -y \
-  && apt-get install -y \
-  efitools sbsigntool \
-  && rm -rf /var/lib/apt/lists/*
+#RUN export DEBIAN_FRONTEND=noninteractive \
+#  && apt-get update \
+#  && apt-get upgrade -y \
+#  && apt-get dist-upgrade -y \
+#  && apt-get install -y \
+#  efitools sbsigntool \
+#  && rm -rf /var/lib/apt/lists/*
 # # ---------------------------------------------------
