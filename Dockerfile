@@ -90,6 +90,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get upgrade -y \
   && apt-get dist-upgrade -y \
   && apt-get install -y \
-  efitools \
+  efitools sbsigntool \
   && rm -rf /var/lib/apt/lists/*
 # # ---------------------------------------------------
