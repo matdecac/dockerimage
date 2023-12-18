@@ -3,6 +3,7 @@ FROM ubuntu:23.10
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get upgrade -y \
+  && apt-get dist-upgrade -y \
   && apt-get install -y \
   software-properties-common \
   tzdata locales bash-completion \
@@ -87,6 +88,13 @@ RUN /venv/bin/pip3 install --no-cache-dir\
 RUN mkdir -p custom_pkgs
 # ---------------------------------------------------
 # install additionnal linux packages for RTKLIB support
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
+  && apt-get upgrade -y \
+  && apt-get dist-upgrade -y \
+  && apt-get install -y \
+  gfortran g++ \
+  && rm -rf /var/lib/apt/lists/*
 RUN cd custom_pkgs && git clone https://github.com/rtklibexplorer/RTKLIB.git rtklib
 RUN cd custom_pkgs/rtklib/app/consapp/convbin/gcc && make -j8 && make install
 RUN cd custom_pkgs/rtklib/app/consapp/rnx2rtkp/gcc && make -j8 && make install
