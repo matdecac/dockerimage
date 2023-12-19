@@ -8,8 +8,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   software-properties-common \
   tzdata locales bash-completion \
   python3 python3-dev python3-pip python3-venv \
-  gcc make git openssh-server curl iproute2 \
-  nano bash-completion \
+  git nano \
   efitools sbsigntool \
   && rm -rf /var/lib/apt/lists/*
 # replace SH with BASH
@@ -34,33 +33,6 @@ ENV PYTHONPATH="/venv/lib/python3.11/site-packages:$PYTHONPATH"
 ENV PYTHONPATH="/venv/lib/python3.11/site-packages:/usr/local/lib/python3.11/site-packages:$PYTHONPATH"
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install pythons extensions
-RUN /venv/bin/pip3 install --no-cache-dir\
-    jupyterlab>=3 \
-    ipywidgets>=7.6 \
-    jupyter-dash \
-    ipython \
-    ipykernel \
-    ptvsd \
-    pylint \
-    plotly \
-    pandas \
-    xlrd \
+RUN /venv/bin/pip3 install --no-cache-dir \
     numpy \
-    scipy \
-    matplotlib \
-    scikit-learn \
-    graphviz \
-    lxml \
-    tabulate \
-    python-dateutil \
-    setuptools \
-# ---------------------------------------------------
-# install additionnal linux packages for RTKLIB support
-#RUN export DEBIAN_FRONTEND=noninteractive \
-#  && apt-get update \
-#  && apt-get upgrade -y \
-#  && apt-get dist-upgrade -y \
-#  && apt-get install -y \
-#  efitools sbsigntool \
-#  && rm -rf /var/lib/apt/lists/*
-# # ---------------------------------------------------
+    pandas
