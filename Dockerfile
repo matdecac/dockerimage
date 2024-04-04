@@ -101,12 +101,3 @@ ENV PYTHONPATH="/venv/lib/python3.11/site-packages:$PYTHONPATH"
 RUN cd custom_pkgs/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. && make -j12
 RUN cd custom_pkgs/uhd/host/build && make install && ldconfig
 ENV PYTHONPATH="/venv/lib/python3.11/site-packages:/usr/local/lib/python3.11/site-packages:$PYTHONPATH"
-
-# ---------------------------------------------------
-# install additionnal linux packages for RTKLIB support
-RUN cd custom_pkgs && git clone https://github.com/rtklibexplorer/RTKLIB.git rtklib
-RUN cd custom_pkgs/rtklib/app/consapp/convbin/gcc && make -j8 && make install
-RUN cd custom_pkgs/rtklib/app/consapp/rnx2rtkp/gcc && make -j8 && make install
-RUN cd custom_pkgs/rtklib/app/consapp/rtkrcv/gcc && make -j8 && make install
-RUN cd custom_pkgs/rtklib/app/consapp/str2str/gcc && make -j8 && make install
-# ---------------------------------------------------
