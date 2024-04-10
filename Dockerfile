@@ -5,23 +5,24 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get upgrade -y \
   && apt-get dist-upgrade -y \
   && apt-get install -y \
-  software-properties-common \
-  tzdata locales bash-completion \
-  python3 python3-dev python3-pip python3-venv \
-  git nano \
-  efitools sbsigntool ca-certificates dpkg-dev \
+  ca-certificates dpkg-dev \
   && rm -rf /var/lib/apt/lists/*
-# replace SH with BASH
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-# Locales gen
-RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
-  && dpkg-reconfigure --frontend noninteractive tzdata \
-  && export LC_ALL="fr_FR.UTF-8" \
-  && export LC_CTYPE="fr_FR.UTF-8" \
-  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-  && echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen \
-  && locale-gen \
-  && dpkg-reconfigure --frontend noninteractive locales
+  # software-properties-common \
+  # tzdata locales bash-completion \
+  # python3 python3-dev python3-pip python3-venv \
+  # git nano \
+  # efitools sbsigntool \
+# # replace SH with BASH
+# RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+# # Locales gen
+# RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
+#   && dpkg-reconfigure --frontend noninteractive tzdata \
+#   && export LC_ALL="fr_FR.UTF-8" \
+#   && export LC_CTYPE="fr_FR.UTF-8" \
+#   && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
+#   && echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen \
+#   && locale-gen \
+#   && dpkg-reconfigure --frontend noninteractive locales
 # # SSH run folder
 # RUN mkdir -p /run/sshd
 # # create python venv
