@@ -49,4 +49,4 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: matdecac/images:1.9.0
+          tags: matdecac/images:2.0.0
