@@ -104,6 +104,7 @@ RUN cd custom_pkgs/rtklib/app/consapp/rtkrcv/gcc && make -j8 && make install
 RUN cd custom_pkgs/rtklib/app/consapp/str2str/gcc && make -j8 && make install
 # ---------------------------------------------------
 # install UHD for USRP support
+# ---------------------------------------------------
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y \
@@ -112,8 +113,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libusb-dev python3-dev \
   python3-ruamel.yaml \
   && rm -rf /var/lib/apt/lists/*
-# RUN cd custom_pkgs && git clone https://github.com/EttusResearch/uhd.git uhd
-COPY uhd-041eef3 custom_pkgs/uhd
+RUN cd custom_pkgs && git clone https://github.com/EttusResearch/uhd.git uhd
 ENV PATH="/venv/bin:$PATH"
 ENV PYTHONPATH="/venv/lib/python3.12/site-packages:$PYTHONPATH"
 RUN cd custom_pkgs/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. -Wno-dev && make -j12
