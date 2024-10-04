@@ -35,7 +35,7 @@ RUN echo "PATH=/venv/bin:$PATH" > /etc/profile.d/python_venv.sh
 ENV PATH="/venv/bin:$PATH"
 ENV PYTHONPATH="/venv/lib/python3.12/site-packages:$PYTHONPATH"
 ENV PYTHONPATH="/venv/lib/python3.12/site-packages:/usr/local/lib/python3.12/site-packages:$PYTHONPATH"
-COPY pip.conf /root/.config/pip/pip.conf
+#COPY pip.conf /root/.config/pip/pip.conf
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install pythons extensions
 RUN /venv/bin/pip3 install --no-cache-dir \
