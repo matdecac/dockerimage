@@ -96,8 +96,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get install -y \
   gfortran g++ \
   && rm -rf /var/lib/apt/lists/*
-# RUN cd custom_pkgs && git clone https://github.com/rtklibexplorer/RTKLIB.git rtklib
-COPY RTKLIB-demo5 custom_pkgs/rtklib
+RUN cd custom_pkgs && git clone https://github.com/rtklibexplorer/RTKLIB.git rtklib
+#COPY RTKLIB-demo5 custom_pkgs/rtklib
 RUN cd custom_pkgs/rtklib/app/consapp/convbin/gcc && make -j8 && make install
 RUN cd custom_pkgs/rtklib/app/consapp/rnx2rtkp/gcc && make -j8 && make install
 RUN cd custom_pkgs/rtklib/app/consapp/rtkrcv/gcc && make -j8 && make install
