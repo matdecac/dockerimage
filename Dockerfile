@@ -33,11 +33,12 @@ RUN mkdir -p /venv \
   && python3 -m venv /venv/
 RUN echo "PATH=/venv/bin:$PATH" > /etc/profile.d/python_venv.sh
 ENV PATH="/venv/bin:$PATH"
-ENV PYTHONPATH="/venv/lib/python3.11/site-packages:$PYTHONPATH"
-ENV PYTHONPATH="/venv/lib/python3.11/site-packages:/usr/local/lib/python3.11/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.12/site-packages:$PYTHONPATH"
+ENV PYTHONPATH="/venv/lib/python3.12/site-packages:/usr/local/lib/python3.12/site-packages:$PYTHONPATH"
+COPY pip.conf /root/.config/pip/pip.conf
 RUN /venv/bin/pip3 install --upgrade pip --no-cache-dir
 # Install pythons extensions
-RUN /venv/bin/pip3 install --no-cache-dir\
+RUN /venv/bin/pip3 install --no-cache-dir \
     jupyterlab>=3 \
     ipywidgets>=7.6 \
     jupyter-dash \
@@ -95,25 +96,27 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get install -y \
   gfortran g++ \
   && rm -rf /var/lib/apt/lists/*
-RUN cd custom_pkgs && git clone https://github.com/rtklibexplorer/RTKLIB.git rtklib
+# RUN cd custom_pkgs && git clone https://github.com/rtklibexplorer/RTKLIB.git rtklib
+COPY RTKLIB-demo5 custom_pkgs/rtklib
 RUN cd custom_pkgs/rtklib/app/consapp/convbin/gcc && make -j8 && make install
 RUN cd custom_pkgs/rtklib/app/consapp/rnx2rtkp/gcc && make -j8 && make install
 RUN cd custom_pkgs/rtklib/app/consapp/rtkrcv/gcc && make -j8 && make install
 RUN cd custom_pkgs/rtklib/app/consapp/str2str/gcc && make -j8 && make install
-# # ---------------------------------------------------
-# # install UHD for USRP support
-# RUN export DEBIAN_FRONTEND=noninteractive \
-#   && apt-get update \
-#   && apt-get install -y \
-#   autoconf automake ccache cpufrequtils ethtool \
-#   g++ inetutils-tools libboost-all-dev libncurses6 libncurses6-dev libusb-1.0-0 libusb-1.0-0-dev \
-#   libusb-dev python3-dev \
-#   ruamel.yaml \
-#   && rm -rf /var/lib/apt/lists/*
+# ---------------------------------------------------
+# install UHD for USRP support
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
+  && apt-get install -y \
+  autoconf automake ccache cpufrequtils ethtool \
+  g++ inetutils-tools libboost-all-dev libncurses6 libncurses-dev libusb-1.0-0 libusb-1.0-0-dev \
+  libusb-dev python3-dev \
+  python3-ruamel.yaml \
+  && rm -rf /var/lib/apt/lists/*
 # RUN cd custom_pkgs && git clone https://github.com/EttusResearch/uhd.git uhd
-# ENV PATH="/venv/bin:$PATH"
-# ENV PYTHONPATH="/venv/lib/python3.11/site-packages:$PYTHONPATH"
-# RUN cd custom_pkgs/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. && make -j12
-# RUN cd custom_pkgs/uhd/host/build && make install && ldconfig
-# ENV PYTHONPATH="/venv/lib/python3.11/site-packages:/usr/local/lib/python3.11/site-packages:$PYTHONPATH"
-# # ---------------------------------------------------
+COPY uhd-041eef3 custom_pkgs/uhd
+ENV PATH="/venv/bin:$PATH"
+ENV PYTHONPATH="/venv/lib/python3.12/site-packages:$PYTHONPATH"
+RUN cd custom_pkgs/uhd/host && mkdir build && cd build && cmake -DCMAKE_FIND_ROOT_PATH=/usr -DENABLE_PYTHON_API=ON .. -Wno-dev && make -j12
+RUN cd custom_pkgs/uhd/host/build && make install && ldconfig
+ENV PYTHONPATH="/venv/lib/python3.12/site-packages:/usr/local/lib/python3.12/site-packages:$PYTHONPATH"
+# ---------------------------------------------------
