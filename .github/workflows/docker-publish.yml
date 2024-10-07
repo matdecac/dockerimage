@@ -47,6 +47,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          platforms: linux/amd64,linux/arm64
+          # platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           push: true
-          tags: matdecac/images:2.0.0
+          tags: matdecac/images:2.0.0_arm64
